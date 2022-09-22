@@ -1,0 +1,149 @@
+[
+  {
+      "issueType": 539547,
+      "id": 2073895,
+      "name": "停留时间",
+      "expression": "GET_TODAY-GET_CREATE_TIME",
+      "type": "date"
+  },
+  {
+      "issueType": 1924626,
+      "id": 1438327,
+      "name": "多久未更新",
+      "expression": "GET_NOW-GET_UPDATE_TIME",
+      "type": "datetime"
+  },
+  {
+      "issueType": 2103286,
+      "id": 13588474,
+      "name": "完成百分比",
+      "expression": "SUM(subtask.estimatePoint;status=4)/SUM(subtask.estimatePoint;)",
+      "type": "percentage_bar"
+  },
+  {
+      "issueType": 2103286,
+      "id": 20662728,
+      "name": "故事价值",
+      "expression": "customfield_19880148*customfield_19883800*customfield_19880237/customfield_20662419",
+      "type": "decimal"
+  },
+  {
+      "issueType": 2103286,
+      "id": 33294509,
+      "name": "公时日期",
+      "expression": "GET_TODAY",
+      "type": "date"
+  },
+  {
+      "issueType": 2103286,
+      "id": 32293472,
+      "name": "点数*3",
+      "expression": "estimatePoint*3",
+      "type": "integer"
+  },
+  {
+      "issueType": 2103286,
+      "id": 32293466,
+      "name": "点数*2",
+      "expression": "estimatePoint*2",
+      "type": "integer"
+  },
+  {
+      "issueType": 2103286,
+      "id": 66646424,
+      "name": "测试公式字段",
+      "expression": "GET_NOW-GET_UPDATE_TIME",
+      "type": "integer"
+  },
+  {
+      "issueType": 2103286,
+      "id": 1438327,
+      "name": "多久未更新",
+      "expression": "GET_NOW-GET_UPDATE_TIME",
+      "type": "datetime"
+  },
+  {
+      "issueType": 2103289,
+      "id": 1438327,
+      "name": "多久未更新",
+      "expression": "GET_NOW-GET_UPDATE_TIME",
+      "type": "datetime"
+  },
+  {
+      "issueType": 4264849,
+      "id": 33163841,
+      "name": "7IGhi噢hi万后你就会  ",
+      "expression": "GET_CREATE_TIME-GET_NOW",
+      "type": "integer"
+  },
+  {
+      "issueType": 4264849,
+      "id": 33163829,
+      "name": "和hiOiOi近哦积极",
+      "expression": "GET_CREATE_TIME-GET_TODAY",
+      "type": "datetime"
+  },
+  {
+      "issueType": 4264849,
+      "id": 1438327,
+      "name": "多久未更新",
+      "expression": "GET_NOW-GET_UPDATE_TIME",
+      "type": "datetime"
+  },
+  {
+      "issueType": 15925996,
+      "id": 20662728,
+      "name": "故事价值",
+      "expression": "customfield_19880148*customfield_19883800*customfield_19880237/customfield_20662419",
+      "type": "decimal"
+  },
+  {
+      "issueType": 15925996,
+      "id": 1438327,
+      "name": "多久未更新",
+      "expression": "GET_NOW-GET_UPDATE_TIME",
+      "type": "datetime"
+  },
+  {
+      "issueType": 32104835,
+      "id": 32123252,
+      "name": "还有多久到期",
+      "expression": "GET_NOW-dueDate",
+      "type": "date"
+  },
+  {
+      "issueType": 32104835,
+      "id": 1438327,
+      "name": "多久未更新",
+      "expression": "GET_NOW-GET_UPDATE_TIME",
+      "type": "datetime"
+  },
+  {
+      "issueType": 33924729,
+      "id": 32123252,
+      "name": "还有多久到期",
+      "expression": "GET_NOW-dueDate",
+      "type": "date"
+  },
+  {
+      "issueType": 33924729,
+      "id": 1438327,
+      "name": "多久未更新",
+      "expression": "GET_NOW-GET_UPDATE_TIME",
+      "type": "datetime"
+  },
+  {
+      "issueType": 33924763,
+      "id": 32123252,
+      "name": "还有多久到期",
+      "expression": "GET_NOW-dueDate",
+      "type": "date"
+  },
+  {
+      "issueType": 33924763,
+      "id": 1438327,
+      "name": "多久未更新",
+      "expression": "GET_NOW-GET_UPDATE_TIME",
+      "type": "datetime"
+  }
+]
