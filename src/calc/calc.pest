@@ -18,10 +18,14 @@ compare_eq  = { "=" }
 compare_lt  = { "<" }
 compare_gt  = { ">" }
 
-function_parameter_item = _{ ident ~ ( compare ~ ( num | ident) )? }
-function_parameter = { function_parameter_item ~ (";" ~ function_parameter_item)?  }
+function_parameter_ident = @{ ident ~ ("." ~ ident)* }
+function_name = { ident }
+function_parameter_compare = { compare ~ (num | function_parameter_ident) }
+function_parameter_item = { function_parameter_ident ~ ( function_parameter_compare )? }
 
-function = { ident ~ "(" ~ function_parameter ~ ")" }
+function_parameter = { function_parameter_item ~ (";" ~ function_parameter_item)* ~ ";"? }
+
+function = { function_name ~ "(" ~ function_parameter ~ ")" }
 atom = _{ function | ident | num | "(" ~ expr ~ ")"  }
 expr = { atom ~ (operation ~ atom)* }
 
