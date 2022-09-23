@@ -180,9 +180,18 @@ impl Function {
                     _ => return None,
                 };
 
-                println!("{:?}", data);
-
-                Some(ExpValue::Number(1.0))
+                match data {
+                    Some(data) => {
+                        let mut sum = 0.0;
+                        for value in data {
+                            if let Some(value) = value.as_object()?.get("id")?.as_f64() {
+                                sum += value;
+                            }
+                        }
+                        Some(ExpValue::Number(sum))
+                    }
+                    None => None,
+                }
             }
 
             // for part in &self.parts {

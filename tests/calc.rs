@@ -296,7 +296,7 @@ mod pass_value_test {
 #[cfg(test)]
 mod function_test {
 
-    use formula::{self, Expression, ExpressionPart};
+    use formula::{self, Expression, ExpressionPart, ExpValue};
     use serde_json::json;
 
     #[test]
@@ -319,6 +319,7 @@ mod function_test {
             ExpressionPart::Function(f) => f,
             _ => panic!("not function"),
         };
-        func.run(&json);
+        let sum = func.run(&json);
+        assert_eq!(sum, Some(ExpValue::Number(3.0)));
     }
 }
