@@ -1,10 +1,12 @@
 use std::ops;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum ExpValue {
     Error,
+    Bool(bool),
     Number(f64),
     String(String),
+    Array(Vec<ExpValue>),
 }
 
 impl ops::Add<ExpValue> for ExpValue {

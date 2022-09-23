@@ -24,36 +24,21 @@ pub fn parse(input: &str) -> Result<Pairs<Rule>, Error<Rule>> {
 
 #[derive(Debug, Clone)]
 pub struct Identifier {
-    name: String,
+    pub name: String,
 }
 
 impl Identifier {
     pub fn get_value(self, table: &HashMap<String, ExpValue>) -> Option<ExpValue> {
         table.get(&self.name).cloned()
     }
-}
 
-fn get_root(expression: Pairs<Rule>) -> Option<Pair<Rule>> {
-    expression.clone().next()
-}
-
-pub fn get_dependencies(expression: Pairs<Rule>) -> Vec<String> {
-    let mut dependencies = Vec::new();
-    let root = get_root(expression);
-
-    match root {
-        Some(r) => {
-            for pair in r.into_inner() {
-                if let Rule::ident | Rule::function_parameter_ident = pair.as_rule() {
-                    let dependency = pair.as_str().to_string();
-                    if !dependencies.contains(&dependency) {
-                        dependencies.push(pair.as_str().to_string());
-                    }
-                }
-            }
-            dependencies
+    pub fn from(expression: Pair<Rule>) -> Option<Identifier> {
+        if let Rule::ident = expression.as_rule() {
+            return Some(Identifier {
+                name: expression.as_str().to_string(),
+            });
         }
-        None => [].to_vec(),
+        None
     }
 }
 

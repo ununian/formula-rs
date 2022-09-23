@@ -77,15 +77,48 @@ mod parse_calc_tests {
         );
     }
 
-    
-
     #[test]
-    fn parse_get_dependencies_1() {
-        let formula = "GET_NOW-GET_UPDATE_TIME";
+    fn parse_expr() {
+        let formula = "SUM(subtask.estimatePoint;status=2) + GET_NOW-GET_UPDATE_TIME";
         let result = formula::parse(&formula).unwrap();
 
-        let dependencies = formula::get_dependencies(result);
-        assert_eq!(dependencies, vec!["GET_NOW", "GET_UPDATE_TIME"]);
+        let expr = Expression::from_pairs(result);
+
+        assert!(expr.is_some())
+    }
+
+    #[test]
+    fn get_expr_dependencies_1() {
+        let formula = "GET_NOW-GET_UPDATE_TIME";
+        let result = formula::parse(&formula).unwrap();
+        let expr = Expression::from_pairs(result).unwrap();
+
+        let dependencies = expr.get_dependencies();
+
+        assert_eq!(
+            dependencies
+                .iter()
+                .map(|s| s.name.as_str())
+                .collect::<Vec<_>>(),
+            vec!["GET_NOW", "GET_UPDATE_TIME",]
+        );
+    }
+
+    #[test]
+    fn get_expr_dependencies_2() {
+        let formula = "SUM(subtask.estimatePoint;status=2) + GET_NOW-GET_UPDATE_TIME";
+        let result = formula::parse(&formula).unwrap();
+        let expr = Expression::from_pairs(result).unwrap();
+
+        let dependencies = expr.get_dependencies();
+
+        assert_eq!(
+            dependencies
+                .iter()
+                .map(|s| s.name.as_str())
+                .collect::<Vec<_>>(),
+            vec!["subtask", "GET_NOW", "GET_UPDATE_TIME",]
+        );
     }
 }
 
@@ -230,5 +263,62 @@ mod number_calc_tests {
         let exp = formula::parse("a % b").unwrap();
         let result = formula::eval(exp, &create_num_table());
         assert_eq!(result, ExpValue::Number(0.0));
+    }
+}
+
+#[cfg(test)]
+mod pass_value_test {
+
+    use formula::{self, ExpValue};
+    use std::collections::HashMap;
+
+    #[test]
+    fn pass_number() {
+        let mut table = HashMap::new();
+        table.insert("a".to_string(), ExpValue::Number(6.0));
+
+        let exp = formula::parse("a").unwrap();
+        let result = formula::eval(exp, &table);
+        assert_eq!(result, ExpValue::Number(6.0));
+    }
+
+    #[test]
+    fn pass_string() {
+        let mut table = HashMap::new();
+        table.insert("a".to_string(), ExpValue::String("123123".to_string()));
+
+        let exp = formula::parse("a").unwrap();
+        let result = formula::eval(exp, &table);
+        assert_eq!(result, ExpValue::String("123123".to_string()));
+    }
+}
+
+#[cfg(test)]
+mod function_test {
+
+    use formula::{self, Expression, ExpressionPart};
+    use serde_json::json;
+
+    #[test]
+    fn func_run() {
+        let json = json!({
+            "subtask": [
+                {
+                    "id": 1,
+                    "name": "test1",
+                },
+                {
+                    "id": 2,
+                    "name": "test2",
+                },
+            ]
+        });
+
+        let exp = formula::parse("SUM(subtask;status=2)").unwrap();
+        let func = match Expression::from_pairs(exp).unwrap().parts[0].clone() {
+            ExpressionPart::Function(f) => f,
+            _ => panic!("not function"),
+        };
+        func.run(&json);
     }
 }
